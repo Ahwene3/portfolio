@@ -85,11 +85,11 @@ export default function Hero() {
             </dl>
           </div>
           <div className="grid gap-4 lg:pl-6">
-            <article className="glass overflow-hidden rounded-2xl border border-[var(--line)] p-3">
+              <article className="group glass overflow-hidden rounded-2xl border border-[var(--line)] p-3 transition duration-300 hover:-translate-y-1 hover:border-[var(--accent)] hover:shadow-[0_18px_50px_rgba(0,0,0,0.22)]">
               <img
                 src={heroPortrait}
                 alt="Portrait of Emmanuel Nana Atakorah Dzimado"
-                className="h-[24rem] w-full rounded-xl bg-[var(--bg-alt)] object-contain object-center p-2 sm:h-[28rem]"
+                  className="h-72 w-full rounded-xl object-cover object-center transition duration-500 group-hover:scale-105"
               />
             </article>
             {highlightCards.map((card) => (
