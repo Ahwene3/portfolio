@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa";
 
 const formspreeEndpoint =
-  import.meta.env.VITE_FORMSPREE_ENDPOINT ?? "https://formspree.io/f/your-form-id";
+  import.meta.env.VITE_FORMSPREE_ENDPOINT ?? "https://formspree.io/f/xqerapqa";
 
 const contactDetails = [
   { label: "Email", value: "atakorahe57@gmail.com" },
@@ -45,8 +45,10 @@ export default function Contact() {
         body: formData,
       });
 
+      const result = await response.json().catch(() => null);
+
       if (!response.ok) {
-        throw new Error("Failed to send message");
+        throw new Error(result?.error || result?.message || "Failed to send message");
       }
 
       form.reset();
@@ -54,10 +56,10 @@ export default function Contact() {
         type: "success",
         message: "Message sent successfully. I’ll get back to you soon.",
       });
-    } catch {
+    } catch (error) {
       setNotification({
         type: "error",
-        message: "Message could not be sent right now. Please try again in a moment.",
+        message: error instanceof Error ? error.message : "Message could not be sent right now. Please try again in a moment.",
       });
     } finally {
       setIsSubmitting(false);
