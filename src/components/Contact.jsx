@@ -1,5 +1,9 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa";
+
+const formspreeEndpoint =
+  import.meta.env.VITE_FORMSPREE_ENDPOINT ?? "https://formspree.io/f/your-form-id";
 
 const contactDetails = [
   { label: "Email", value: "atakorahe57@gmail.com" },
@@ -8,6 +12,58 @@ const contactDetails = [
 ];
 
 export default function Contact() {
+  const [notification, setNotification] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!notification) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setNotification(null);
+    }, 5000);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [notification]);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    setIsSubmitting(true);
+    setNotification(null);
+
+    try {
+      const response = await fetch(formspreeEndpoint, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      form.reset();
+      setNotification({
+        type: "success",
+        message: "Message sent successfully. I’ll get back to you soon.",
+      });
+    } catch {
+      setNotification({
+        type: "error",
+        message: "Message could not be sent right now. Please try again in a moment.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <motion.section
       id="contact"
@@ -26,14 +82,56 @@ export default function Contact() {
         </p>
       </div>
       <div className="mt-8 grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
-        <form className="glass rounded-3xl border border-[var(--line)] p-6 sm:p-8">
+        <form className="glass rounded-3xl border border-[var(--line)] p-6 sm:p-8" onSubmit={handleSubmit}>
           <div className="grid gap-4">
-            <input className="input" type="text" placeholder="Your name" />
-            <input className="input" type="email" placeholder="Work email" />
-            <input className="input" type="text" placeholder="Project / company" />
-            <textarea className="input min-h-32" placeholder="What are we building together?" />
-            <button className="rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[#1e1406] transition hover:-translate-y-0.5">
-              Send message
+            {notification ? (
+              <p
+                className={`rounded-2xl border px-4 py-3 text-sm font-medium ${
+                  notification.type === "success"
+                    ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-100"
+                    : "border-rose-500/30 bg-rose-500/10 text-rose-100"
+                }`}
+                role="status"
+                aria-live="polite"
+              >
+                {notification.message}
+              </p>
+            ) : null}
+
+            <label className="sr-only" htmlFor="name">
+              Your name
+            </label>
+            <input className="input" id="name" name="name" type="text" placeholder="Your name" autoComplete="name" required />
+
+            <label className="sr-only" htmlFor="email">
+              Work email
+            </label>
+            <input className="input" id="email" name="email" type="email" placeholder="Work email" autoComplete="email" required />
+
+            <label className="sr-only" htmlFor="company">
+              Project or company
+            </label>
+            <input className="input" id="company" name="company" type="text" placeholder="Project / company" autoComplete="organization" required />
+
+            <label className="sr-only" htmlFor="message">
+              Message
+            </label>
+            <textarea
+              className="input min-h-32"
+              id="message"
+              name="message"
+              placeholder="What are we building together?"
+              required
+            />
+
+            <input className="hidden" type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+
+            <button
+              className="rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[#1e1406] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Sending..." : "Send message"}
             </button>
           </div>
         </form>
