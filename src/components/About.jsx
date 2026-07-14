@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 
+const aboutPortrait = new URL("../../picture/WhatsApp Image 2026-07-14 at 3.43.49 PM.jpeg", import.meta.url).href;
+
 const principles = [
   {
     title: "Composed visuals",
@@ -54,6 +56,13 @@ export default function About() {
           </dl>
         </article>
         <div className="grid gap-4">
+          <article className="glass overflow-hidden rounded-2xl border border-[var(--line)] p-3">
+            <img
+              src={aboutPortrait}
+              alt="Portrait of Emmanuel Nana Atakorah Dzimado"
+              className="h-72 w-full rounded-xl object-cover object-center"
+            />
+          </article>
           {principles.map((principle, index) => (
             <article key={principle.title} className="glass flex flex-col rounded-2xl border border-[var(--line)] p-6">
               <span className="text-xs font-semibold uppercase tracking-[0.35em] text-[var(--text-muted)]">

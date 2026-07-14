@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { FaDownload, FaEnvelope } from "react-icons/fa";
 import { useTypingText } from "../hooks/useTypingText";
 
+const heroPortrait = new URL("../../picture/WhatsApp Image 2026-07-14 at 3.43.48 PM.jpeg", import.meta.url).href;
+
 const heroStats = [
   { label: "Projects shipped", value: "14" },
   { label: "Years crafting", value: "3+" },
@@ -83,6 +85,13 @@ export default function Hero() {
             </dl>
           </div>
           <div className="grid gap-4 lg:pl-6">
+            <article className="glass overflow-hidden rounded-2xl border border-[var(--line)] p-3">
+              <img
+                src={heroPortrait}
+                alt="Portrait of Emmanuel Nana Atakorah Dzimado"
+                className="h-72 w-full rounded-xl object-cover object-center"
+              />
+            </article>
             {highlightCards.map((card) => (
               <article key={card.title} className="glass relative overflow-hidden rounded-2xl border border-[var(--line)] p-5">
                 <span className="text-xs uppercase tracking-[0.35em] text-[var(--text-muted)]">{card.title}</span>
