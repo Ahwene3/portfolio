@@ -89,7 +89,7 @@ export default function Hero() {
               <img
                 src={heroPortrait}
                 alt="Portrait of Emmanuel Nana Atakorah Dzimado"
-                  className="h-72 w-full rounded-xl object-cover object-center transition duration-500 group-hover:scale-105"
+                  className="h-72 w-full rounded-xl object-cover object-[center_18%] transition duration-500 group-hover:scale-105"
               />
             </article>
             {highlightCards.map((card) => (
