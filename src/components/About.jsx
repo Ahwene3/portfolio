@@ -20,7 +20,7 @@ const principles = [
 const quickFacts = [
   { label: "Based in", value: "Accra, Ghana" },
   { label: "Discipline", value: "Full stack / Systems" },
-  { label: "Currently", value: "Final year · RMU" },
+  { label: "Currently", value: "Graduate · RMU" },
   { label: "Availability", value: "April 2026" },
 ];
 

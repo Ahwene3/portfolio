@@ -25,7 +25,7 @@ const highlightCards = [
 export default function Hero() {
   const typed = useTypingText([
     "I weave calm UI with intelligent backends.",
-    "Final year IT student @ Regional Maritime University.",
+    "Graduate · Regional Maritime University.",
     "Building humane automation for the web.",
   ]);
 
@@ -89,7 +89,7 @@ export default function Hero() {
               <img
                 src={heroPortrait}
                 alt="Portrait of Emmanuel Nana Atakorah Dzimado"
-                className="h-72 w-full rounded-xl object-cover object-center"
+                className="h-[24rem] w-full rounded-xl bg-[var(--bg-alt)] object-contain object-center p-2 sm:h-[28rem]"
               />
             </article>
             {highlightCards.map((card) => (
